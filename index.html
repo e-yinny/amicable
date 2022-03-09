@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amicable Numbers</title>
+
+    <!-- JQuery -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <h1>Amicable or Not?</h1>
+    <form>
+        First Number <input type = "text" id = "one"><br/><br/>
+        Second Number <input type = "text" id = "two"><br/><br/>
+        <input type = "button" value = "Calculate" onclick = "checkAmicable()">
+    </form>
+
+    <div class="result"></div>
+
+    <div class="factors"></div>
+
+    <script lang="javascript">
+    
+    // Runs everything
+    function checkAmicable() {
+        //Get numbers from user input
+        var firstNum, secondNum;
+        firstNum = document.getElementById('one').value;
+        secondNum = document.getElementById('two').value;
+
+        //Arrays where factors for each number are stored
+        var oneFactors = []
+        var twoFactors = []
+        //Populate the arrays
+        getFactors(firstNum, oneFactors);
+        getFactors(secondNum, twoFactors);
+
+        //Check if Amicable
+        if (isAmicable(firstNum, secondNum, oneFactors, twoFactors)) {
+            $(".result").html("The numbers: " + firstNum + " and " + secondNum + " are amicable!");
+        } else {
+            $(".result").html("The numbers: " + firstNum + " and " + secondNum + " are not amicable!");
+        }
+
+        //Put Factors into a String for Display
+        var firstFactors = "";
+        var secondFactors = "";
+
+        for(var i = 0; i < oneFactors.length; i++) {
+            firstFactors += oneFactors[i].toString() + ",";
+        }
+        for(var i = 0; i < twoFactors.length; i++) {
+            secondFactors += twoFactors[i].toString() + ",";
+        }
+
+        //Display Factors
+        $(".factors").html("Factors for " + firstNum + " are [" + firstFactors + "]" + 
+                            " and factors for " + secondNum + " are [" + secondFactors + "]");
+    }
+
+
+
+    // Populate Factor Arrays
+    function getFactors(num, arr) {
+        for(var i = 1; i < num; i++) {
+            if(num % i == 0) {
+                arr.push(i);
+            }
+        }
+    }
+
+    // Check if two numbers are Amicable
+    function isAmicable(first, second, firstList, secondList) {
+        var sumFirst = 0;
+        var sumSecond = 0;
+        
+        for (var i = 0; i < firstList.length; i++){
+            sumFirst = sumFirst + firstList[i];
+        }
+        
+        for (var i = 0; i < secondList.length; i++){
+            sumSecond = sumSecond + secondList[i];
+        }
+        
+        if(sumFirst == second && sumSecond == first){
+            return true;
+        }
+        else{
+            return false;
+        } 
+    }
+    </script>
+    
+</body>
+</html>
